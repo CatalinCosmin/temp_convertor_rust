@@ -52,41 +52,18 @@ fn main() {
         }
     }
 
-    let mut converted_value: f64 = value;
+    let converted_value: f64;
 
-    if initial_measuring_unit == 'c' {
-        if final_measuring_unit == 'c' {
-            converted_value = value;
-        }
-        if final_measuring_unit == 'f' {
-            converted_value = (value - 32.0) / 5.0 / 9.0;
-        }
-        if final_measuring_unit == 'k' {
-            converted_value = value + 273.15;
-        }
-    }
-    if initial_measuring_unit == 'f' {
-        if final_measuring_unit == 'c' {
-            converted_value = value * 5.0 / 9.0 + 32.0;
-        }
-        if final_measuring_unit == 'f' {
-            converted_value = value;
-        }
-        if final_measuring_unit == 'k' {
-            converted_value = (value - 32.0) * 5.0 / 9.0 + 273.15;
-        }
-    }
-    if initial_measuring_unit == 'k' {
-        if final_measuring_unit == 'c' {
-            converted_value = value - 273.15;
-        }
-        if final_measuring_unit == 'f' {
-            converted_value = (value - 273.15) * 9.0 / 5.0 + 32.0;
-        }
-        if final_measuring_unit == 'k' {
-            converted_value = value;
-        }
-    }
+    match (initial_measuring_unit, final_measuring_unit) {
+        ('c', 'f') => converted_value = (value - 32.0) / 5.0 / 9.0,
+        ('c', 'k') => converted_value = value + 273.15,
+        ('f', 'c') => converted_value = value * 5.0 / 9.0 + 32.0,
+        ('f', 'k') => converted_value = (value - 32.0) * 5.0 / 9.0 + 273.15,
+        ('k', 'c') => converted_value = value - 273.15,
+        ('k', 'f') => converted_value = (value - 273.15) * 9.0 / 5.0 + 32.0,
+        _ => converted_value = value
+    };
+
     println!("{}{} equals {:.1}{}", value, initial_measuring_unit.to_uppercase(), converted_value, final_measuring_unit.to_uppercase());
 
 }
